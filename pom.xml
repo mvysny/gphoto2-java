@@ -44,8 +44,8 @@
     </issueManagement>
     <distributionManagement>
         <repository>
-            <id>innovatrics-nexus</id>
-            <url>scp://192.168.1.77/home/nexus/sonatype-work/nexus/storage/releases</url>
+            <id>realtime</id>
+            <url>scp://rt.sk/home/moto/public_html/maven2</url>
         </repository>
     </distributionManagement>
     <licenses>
@@ -113,6 +113,14 @@
                     </execution>
                 </executions>
             </plugin>
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<username>${google-code.hg.username}</username>
+					<password>${google-code.hg.password}</password>
+				</configuration>
+			</plugin>
         </plugins>
     </build>
     <dependencies>
