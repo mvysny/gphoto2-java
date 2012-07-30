@@ -173,4 +173,8 @@ public class Camera implements Closeable {
             CameraUtils.closeQuietly(c);
         }
     }
+    
+    public void setPortInfo(Pointer portInfo) {
+        CameraUtils.check(GPhoto2Native.INSTANCE.gp_camera_set_port_info(camera, portInfo), "gp_camera_set_port_info");
+    }
 }

@@ -188,6 +188,10 @@ public interface GPhoto2Native extends Library {
     void gp_abilities_list_free(Pointer cameraAbilitiesList);
 
     void gp_port_info_list_free(Pointer portInfoList);
+    
+    int gp_port_info_list_get_info(Pointer portInfoList, int n, PointerByReference portInfo);
+    
+    int gp_camera_set_port_info(Pointer camera, Pointer portInfo);
 
     /**
      * A structure created by the capture operation.

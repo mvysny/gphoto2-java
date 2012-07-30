@@ -136,4 +136,10 @@ public class CameraList implements Closeable {
     public void close() {
 	CameraUtils.check(GPhoto2Native.INSTANCE.gp_list_free(list), "gp_list_free");
     }
+    
+    public Pointer getPortInfo(int index) {
+        final PointerByReference result = new PointerByReference();
+        CameraUtils.check(GPhoto2Native.INSTANCE.gp_port_info_list_get_info(list, index, result), "gp_port_info_list_get_info");
+        return result.getValue();
+    }
 }
