@@ -1,20 +1,20 @@
 /**
- * Java bindings for the libgphoto2 library.
- * Copyright (C) 2011 Innovatrics s.r.o.
- * 
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Java bindings for the libgphoto2 library. Copyright (C) 2011 Innovatrics
+ * s.r.o.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 package org.gphoto2;
 
@@ -32,28 +32,29 @@ import org.gphoto2.jna.GPhoto2Native;
 public class CameraUtils {
 
     private CameraUtils() {
-	throw new AssertionError();
+        throw new AssertionError();
     }
 
     public static void closeQuietly(Closeable c) {
-	try {
-	    c.close();
-	} catch (Throwable t) {
-	    log.log(Level.WARNING, "Failed to close Closeable " + c.getClass().getName(), t);
-	}
+        try {
+            c.close();
+        } catch (Throwable t) {
+            log.log(Level.WARNING, "Failed to close Closeable " + c.getClass().getName(), t);
+        }
     }
     private final static Logger log = Logger.getLogger(CameraUtils.class.getName());
 
     public static int check(int result, String methodName) {
-	if (result != GPhoto2Native.GP_OK) {
-        String constantName = ERROR_CONSTANTS.get(result);
-        if (constantName == null) {
-            constantName ="unknown error";
+        if (result != GPhoto2Native.GP_OK) {
+            String constantName = ERROR_CONSTANTS.get(result);
+            if (constantName == null) {
+                constantName = "unknown error";
+            }
+            throw new GPhotoException(methodName + " failed with " + constantName + " #" + result + ": " + GPhoto2Native.INSTANCE.gp_result_as_string(result), result);
         }
-	    throw new GPhotoException(methodName + " failed with " + constantName + " #" + result + ": " + GPhoto2Native.INSTANCE.gp_result_as_string(result), result);
-	}
-	return result;
+        return result;
     }
+
     public static void checkQuietly(int result, String methodName) {
         try {
             check(result, methodName);
@@ -63,12 +64,12 @@ public class CameraUtils {
     }
 
     public static String toString(char[] array) {
-	for (int i = 0; i < array.length; i++) {
-	    if (array[i] == 0) {
-		return new String(array, 0, i);
-	    }
-	}
-	return new String(array);
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == 0) {
+                return new String(array, 0, i);
+            }
+        }
+        return new String(array);
     }
 
     public static String toString(byte[] array) {
@@ -83,8 +84,8 @@ public class CameraUtils {
             throw new RuntimeException(ex);
         }
     }
-
     private static final Map<Integer, String> ERROR_CONSTANTS = new HashMap<Integer, String>();
+
     static {
         final Map<Integer, String> m = ERROR_CONSTANTS;
         m.put(GPhoto2Native.GP_ERROR_CORRUPTED_DATA, "GP_ERROR_CORRUPTED_DATA");
