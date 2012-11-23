@@ -301,7 +301,9 @@ public interface GPhoto2Native extends Library {
      * function.
      */
     public static class CameraFilePath extends Structure {
-
+        {
+            setFieldOrder(new String[] { "name", "folder" });
+        }
         /**
          * Name of the captured file.
          */
