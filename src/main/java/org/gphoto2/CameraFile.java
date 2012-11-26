@@ -40,6 +40,10 @@ public class CameraFile implements Closeable {
 	cf = p.getValue();
     }
 
+    public void clean() {
+        CameraUtils.check(GPhoto2Native.INSTANCE.gp_file_clean(cf), "gp_file_clean");
+    }
+    
     /**
      * Closes this file link and frees allocated resources.
      */

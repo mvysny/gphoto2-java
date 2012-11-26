@@ -132,7 +132,7 @@ public class Camera implements Closeable {
 
     public static void main(String[] args) throws Exception {
         final boolean autoFocus = false;
-        final boolean preview = true;
+        final boolean preview = false;
         System.out.println("GPhoto version: " + getLibraryVersion());
         final CameraList cl = new CameraList();
         try {

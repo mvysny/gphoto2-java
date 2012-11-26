@@ -293,6 +293,8 @@ public interface GPhoto2Native extends Library {
 
     int gp_camera_set_port_info(Pointer camera, Pointer portInfo);
 
+    int gp_file_clean(Pointer cf);
+
     /**
      * A structure created by the capture operation.
      *
