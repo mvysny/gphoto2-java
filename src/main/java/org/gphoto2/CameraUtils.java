@@ -45,7 +45,7 @@ public class CameraUtils {
     private final static Logger log = Logger.getLogger(CameraUtils.class.getName());
 
     public static int check(int result, String methodName) {
-        if (result != GPhoto2Native.GP_OK) {
+        if (result < GPhoto2Native.GP_OK) {
             String constantName = ERROR_CONSTANTS.get(result);
             if (constantName == null) {
                 constantName = "unknown error";
