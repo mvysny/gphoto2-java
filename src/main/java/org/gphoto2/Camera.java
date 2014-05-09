@@ -20,12 +20,13 @@ package org.gphoto2;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
-import java.io.Closeable;
-import java.io.File;
-import java.io.IOException;
 import org.gphoto2.CameraFile.Path;
 import org.gphoto2.jna.GPhoto2Native;
 import org.gphoto2.jna.GPhoto2Native.CameraFilePath;
+
+import java.io.Closeable;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Represents a camera. Thread-unsafe.
@@ -49,6 +50,7 @@ public class Camera implements Closeable {
      * Initializes the camera.
      */
     public void initialize() {
+        checkNotClosed();
         if (!isInitialized) {
             CameraUtils.check(GPhoto2Native.INSTANCE.gp_camera_init(camera, CameraList.CONTEXT), "gp_camera_init");
             isInitialized = true;
@@ -59,17 +61,31 @@ public class Camera implements Closeable {
      * De-initializes the camera.
      */
     public void deinitialize() throws IOException {
+        checkNotClosed();
         if (isInitialized) {
+            isInitialized = false;
             CameraUtils.check(GPhoto2Native.INSTANCE.gp_camera_exit(camera, CameraList.CONTEXT), "gp_camera_exit");
         }
     }
 
+    private boolean closed = false;
+
     /**
-     * De-initializes the camera and frees all resources.
+     * De-initializes the camera and frees all resources. Further invocations to this method do nothing. Any camera method
+     * will fail from now on with {@link java.lang.IllegalStateException}.
      */
     public void close() throws IOException {
-        deinitialize();
-        CameraUtils.check(GPhoto2Native.INSTANCE.gp_camera_free(camera), "gp_camera_free");
+        if (!closed) {
+            deinitialize();
+            closed = true;
+            CameraUtils.check(GPhoto2Native.INSTANCE.gp_camera_free(camera), "gp_camera_free");
+        }
+    }
+
+    private void checkNotClosed() {
+        if (closed) {
+            throw new IllegalStateException("Invalid state: closed");
+        }
     }
 
     /**
@@ -77,6 +93,7 @@ public class Camera implements Closeable {
      * @return camera file, never null. Must be closed afterwards.
      */
     public CameraFile capturePreview() {
+        checkNotClosed();
         boolean returnedOk = false;
         final CameraFile cfile = new CameraFile();
         try {
@@ -95,6 +112,7 @@ public class Camera implements Closeable {
      * @return the configuration, never null. Must be closed afterwards.
      */
     public CameraWidgets newConfiguration() {
+        checkNotClosed();
         return new CameraWidgets(this);
     }
 
@@ -103,6 +121,7 @@ public class Camera implements Closeable {
      * @return camera file, never null. Must be closed afterwards.
      */
     public CameraFile captureImage() {
+        checkNotClosed();
         final CameraFilePath path = new CameraFilePath.ByReference();
         CameraUtils.check(GPhoto2Native.INSTANCE.gp_camera_capture(camera, GPhoto2Native.GP_CAPTURE_IMAGE, path, CameraList.CONTEXT), "gp_camera_capture");
         final Path p = new CameraFile.Path(path);
@@ -110,10 +129,12 @@ public class Camera implements Closeable {
     }
 
     void ref() {
+        checkNotClosed();
         CameraUtils.check(GPhoto2Native.INSTANCE.gp_camera_ref(camera), "gp_camera_ref");
     }
 
     void unref() {
+        checkNotClosed();
         CameraUtils.check(GPhoto2Native.INSTANCE.gp_camera_unref(camera), "gp_camera_ref");
     }
 
@@ -175,6 +196,7 @@ public class Camera implements Closeable {
     }
     
     public void setPortInfo(Pointer portInfo) {
+        checkNotClosed();
         CameraUtils.check(GPhoto2Native.INSTANCE.gp_camera_set_port_info(camera, portInfo), "gp_camera_set_port_info");
     }
 }
