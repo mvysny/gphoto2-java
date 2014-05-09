@@ -49,49 +49,51 @@ public final class CameraWidgets implements Closeable {
         /**
          * Window widget This is the toplevel configuration widget. It should likely contain multiple GP_WIDGET_SECTION entries.
          */
-        Window(GPhoto2Native.GP_WIDGET_WINDOW, false, false, null),
+        Window(GPhoto2Native.GP_WIDGET_WINDOW, false, false, false, null),
         /**
          * Section widget (think Tab).
          */
-        Section(GPhoto2Native.GP_WIDGET_SECTION, false, false, null),
+        Section(GPhoto2Native.GP_WIDGET_SECTION, false, false, false, null),
         /**
          * Text widget.
          */
-        Text(GPhoto2Native.GP_WIDGET_TEXT, true, false, String.class),
+        Text(GPhoto2Native.GP_WIDGET_TEXT, true, false, false, String.class),
         /**
          * Slider widget.
          */
-        Range(GPhoto2Native.GP_WIDGET_RANGE, true, false, Float.class),
+        Range(GPhoto2Native.GP_WIDGET_RANGE, true, false, false, Float.class),
         /**
          * Toggle widget (think check box).
          */
-        Toggle(GPhoto2Native.GP_WIDGET_TOGGLE, true, false, Boolean.class),
+        Toggle(GPhoto2Native.GP_WIDGET_TOGGLE, true, false, true, Boolean.class),
         /**
          * Radio button widget.
          */
-        Radio(GPhoto2Native.GP_WIDGET_RADIO, true, true, String.class),
+        Radio(GPhoto2Native.GP_WIDGET_RADIO, true, true, false, String.class),
         /**
          * Menu widget (same as {@link #Radio}).
          */
-        Menu(GPhoto2Native.GP_WIDGET_MENU, true, true, String.class),
+        Menu(GPhoto2Native.GP_WIDGET_MENU, true, true, false, String.class),
         /**
          * Button press widget.
          */
-        Button(GPhoto2Native.GP_WIDGET_BUTTON, true, false, Void.class),
+        Button(GPhoto2Native.GP_WIDGET_BUTTON, true, false, true, Void.class),
         /**
          * Date entering widget.
          */
-        Date(GPhoto2Native.GP_WIDGET_DATE, true, false, Date.class);
+        Date(GPhoto2Native.GP_WIDGET_DATE, true, false, false, Date.class);
         public final int cval;
         public final boolean hasValue;
         public final boolean hasChoices;
+        public final boolean acceptNullValue;
         public final Class<?> valueType;
 
-        private WidgetTypeEnum(int cval, boolean hasValue, boolean hasChoices, Class<?> valueType) {
+        private WidgetTypeEnum(int cval, boolean hasValue, boolean hasChoices, boolean acceptNullValue, Class<?> valueType) {
             this.cval = cval;
             this.hasValue = hasValue;
             this.hasChoices = hasChoices;
             this.valueType = valueType;
+            this.acceptNullValue = acceptNullValue;
         }
 
         public static WidgetTypeEnum fromCVal(int cval) {
@@ -101,6 +103,16 @@ public final class CameraWidgets implements Closeable {
                 }
             }
             throw new IllegalArgumentException("Parameter cval: invalid value " + cval + ": no such widget type");
+        }
+
+        public boolean acceptsValue(Object value) {
+            if (valueType == null) {
+                return false;
+            }
+            if (value == null) {
+                return acceptNullValue;
+            }
+            return valueType.isInstance(value);
         }
     }
     private Map<String, Pointer> widgets = new HashMap<String, Pointer>();
@@ -231,16 +243,16 @@ public final class CameraWidgets implements Closeable {
 
     /**
      * Sets the value of given property. The value must be of correct class.
-     * @param name the property name.
-     * @param value the value.
+     * @param name the property name, not null
+     * @param value the value, may be null.
      */
     public void setValue(String name, Object value) {
         if (isReadOnly(name)) {
             throw new IllegalArgumentException("Parameter name: invalid value " + name + ": read-only");
         }
         final WidgetTypeEnum type = getType(name);
-        if (!type.valueType.isInstance(value)) {
-            throw new IllegalArgumentException("Parameter value: invalid value " + value + ": expected " + type.valueType + " but got " + value.getClass());
+        if (!type.acceptsValue(value)) {
+            throw new IllegalArgumentException("Parameter value: invalid value " + value + ": expected " + type.valueType + " but got " + (value == null ? "null" : value.getClass()));
         }
         final Pointer ptr;
         switch (type) {
@@ -305,6 +317,7 @@ public final class CameraWidgets implements Closeable {
     }
 
     private Pointer get(String name) {
+        CameraUtils.requireNotNull(name, "name");
         if (rootWidget == null) {
             throw new IllegalStateException("Closed");
         }

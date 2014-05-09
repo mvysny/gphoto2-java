@@ -18,13 +18,14 @@
  */
 package org.gphoto2;
 
+import org.gphoto2.jna.GPhoto2Native;
+
 import java.io.Closeable;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.gphoto2.jna.GPhoto2Native;
 
 /**
  * @author Martin Vysny
@@ -121,5 +122,18 @@ public class CameraUtils {
         m.put(GPhoto2Native.GP_ERROR_IO_USB_CLAIM, "GP_ERROR_IO_USB_CLAIM");
         m.put(GPhoto2Native.GP_ERROR_IO_LOCK, "GP_ERROR_IO_LOCK");
         m.put(GPhoto2Native.GP_ERROR_HAL, "GP_ERROR_HAL");
+    }
+
+    public static <T> T requireNotNull(T obj) {
+        if (obj == null) {
+            throw new NullPointerException();
+        }
+        return obj;
+    }
+    public static <T> T requireNotNull(T obj, String name) {
+        if (obj == null) {
+            throw new NullPointerException(name);
+        }
+        return obj;
     }
 }
