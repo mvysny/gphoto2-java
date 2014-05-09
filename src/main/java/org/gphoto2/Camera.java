@@ -57,6 +57,14 @@ public class Camera implements Closeable {
         }
     }
 
+    public boolean isClosed() {
+        return closed;
+    }
+
+    public boolean isInitialized() {
+        return isInitialized;
+    }
+
     /**
      * De-initializes the camera.
      */

@@ -44,6 +44,15 @@ public final class CameraWidgets implements Closeable {
         widgets.clear();
     }
 
+    private void checkNotClosed() {
+        if (rootWidget == null) {
+            throw new IllegalStateException("Invalid state: closed");
+        }
+        if (camera.isClosed()) {
+            throw new IllegalStateException("Invalid state: camera is closed");
+        }
+    }
+
     public static enum WidgetTypeEnum {
 
         /**
@@ -137,6 +146,7 @@ public final class CameraWidgets implements Closeable {
     }
 
     private void enumWidgets(Pointer widget, String name) {
+        checkNotClosed();
         final IntByReference type = new IntByReference();
         CameraUtils.check(GPhoto2Native.INSTANCE.gp_widget_get_type(widget, type), "gp_widget_get_type");
         final WidgetTypeEnum t = WidgetTypeEnum.fromCVal(type.getValue());
@@ -156,12 +166,14 @@ public final class CameraWidgets implements Closeable {
      * @return a list of widgets, never null, may be empty.
      */
     public List<String> getNames() {
+        checkNotClosed();
         final List<String> result = new ArrayList<String>(widgets.keySet());
         Collections.sort(result);
         return result;
     }
 
     private String getBasename(Pointer widget) {
+        checkNotClosed();
         final PointerByReference pref = new PointerByReference();
         CameraUtils.check(GPhoto2Native.INSTANCE.gp_widget_get_name(widget, pref), "gp_widget_get_name");
         final Pointer p = pref.getValue();
@@ -174,6 +186,7 @@ public final class CameraWidgets implements Closeable {
      * @return widget label.
      */
     public String getLabel(String name) {
+        checkNotClosed();
         final PointerByReference pref = new PointerByReference();
         CameraUtils.check(GPhoto2Native.INSTANCE.gp_widget_get_label(get(name), pref), "gp_widget_get_label");
         final Pointer p = pref.getValue();
@@ -186,6 +199,7 @@ public final class CameraWidgets implements Closeable {
      * @return widget info.
      */
     public String getInfo(String name) {
+        checkNotClosed();
         final PointerByReference pref = new PointerByReference();
         CameraUtils.check(GPhoto2Native.INSTANCE.gp_widget_get_info(get(name), pref), "gp_widget_get_info");
         final Pointer p = pref.getValue();
@@ -198,6 +212,7 @@ public final class CameraWidgets implements Closeable {
      * @return widget type, never null.
      */
     public WidgetTypeEnum getType(String name) {
+        checkNotClosed();
         final IntByReference type = new IntByReference();
         CameraUtils.check(GPhoto2Native.INSTANCE.gp_widget_get_type(get(name), type), "gp_widget_get_type");
         return WidgetTypeEnum.fromCVal(type.getValue());
@@ -209,6 +224,7 @@ public final class CameraWidgets implements Closeable {
      * @return the value.
      */
     public Object getValue(String name) {
+        checkNotClosed();
         final WidgetTypeEnum type = getType(name);
         switch (type) {
             case Text:
@@ -243,10 +259,13 @@ public final class CameraWidgets implements Closeable {
 
     /**
      * Sets the value of given property. The value must be of correct class.
+     * <p></p>
+     * Important: after the changes are made, the {@link #apply()} method must be called, to apply the new values.
      * @param name the property name, not null
      * @param value the value, may be null.
      */
     public void setValue(String name, Object value) {
+        checkNotClosed();
         if (isReadOnly(name)) {
             throw new IllegalArgumentException("Parameter name: invalid value " + name + ": read-only");
         }
@@ -309,6 +328,7 @@ public final class CameraWidgets implements Closeable {
     }
 
     public void setChanged(String name, boolean changed) {
+        checkNotClosed();
         CameraUtils.check(GPhoto2Native.INSTANCE.gp_widget_set_changed(get(name), changed ? 1 : 0), "gp_widget_set_changed");
     }
 
@@ -318,9 +338,7 @@ public final class CameraWidgets implements Closeable {
 
     private Pointer get(String name) {
         CameraUtils.requireNotNull(name, "name");
-        if (rootWidget == null) {
-            throw new IllegalStateException("Closed");
-        }
+        checkNotClosed();
         final Pointer ptr = widgets.get(name);
         if (ptr == null) {
             throw new IllegalArgumentException("Parameter name: invalid value " + name + ": the name is not known");
@@ -351,6 +369,7 @@ public final class CameraWidgets implements Closeable {
     }
 
     public boolean isReadOnly(String name) {
+        checkNotClosed();
         final IntByReference result = new IntByReference();
         CameraUtils.check(GPhoto2Native.INSTANCE.gp_widget_get_readonly(get(name), result), "gp_widget_get_readonly");
         return result.getValue() == 1;
@@ -366,6 +385,7 @@ public final class CameraWidgets implements Closeable {
      * @return a formatted string of all options.
      */
     public String inspect() {
+        checkNotClosed();
         final StringBuilder sb = new StringBuilder();
         for (final String name : getNames()) {
             final WidgetTypeEnum type = getType(name);
@@ -396,6 +416,7 @@ public final class CameraWidgets implements Closeable {
      * If the settings are altered, they need to be applied to take effect.
      */
     public void apply() {
+        checkNotClosed();
         CameraUtils.check(GPhoto2Native.INSTANCE.gp_camera_set_config(camera.camera, rootWidget, CameraList.CONTEXT), "gp_camera_set_config");
     }
 
