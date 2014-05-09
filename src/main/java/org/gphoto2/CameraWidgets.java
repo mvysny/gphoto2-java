@@ -23,17 +23,12 @@ import com.sun.jna.Pointer;
 import com.sun.jna.ptr.FloatByReference;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
+import org.gphoto2.jna.GPhoto2Native;
+
 import java.io.Closeable;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.gphoto2.jna.GPhoto2Native;
+import java.util.*;
 
 /**
  * Represents a list of configuration items (called widgets by gphoto).
@@ -258,7 +253,8 @@ public final class CameraWidgets implements Closeable {
                 } catch (UnsupportedEncodingException ex) {
                     throw new RuntimeException(ex);
                 }
-                final ByteBuffer buf = ByteBuffer.allocateDirect(b.length);
+                // patched as shown in https://code.google.com/p/gphoto2-java/issues/detail?id=5
+                final ByteBuffer buf = ByteBuffer.allocateDirect(b.length + 1);
                 buf.put(b);
                 ptr = Native.getDirectBufferPointer(buf);
             }
