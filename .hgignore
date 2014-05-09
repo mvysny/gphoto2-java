@@ -1,4 +1,6 @@
 syntax: glob
 target
 nbactions.xml
+.idea
+*.iml
 
