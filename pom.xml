@@ -24,7 +24,7 @@
     <groupId>org.gphoto</groupId>
     <artifactId>gphoto2-java</artifactId>
     <packaging>jar</packaging>
-    <version>1.4</version>
+    <version>1.5-SNAPSHOT</version>
     <name>GPhoto2 Java Bindings</name>
     <url>http://www.gphoto.org</url>
     <inceptionYear>2011</inceptionYear>
@@ -37,7 +37,7 @@
         <connection>scm:hg:https://gphoto2-java.googlecode.com/hg/</connection>
         <developerConnection>scm:hg:https://gphoto2-java.googlecode.com/hg/</developerConnection>
         <url>https://gphoto2-java.googlecode.com/hg/</url>
-      <tag>gphoto2-java-1.4</tag>
+      <tag>HEAD</tag>
   </scm>
     <issueManagement>
         <system>GoogleCode</system>
