@@ -66,7 +66,7 @@ public final class CameraWidgets implements Closeable {
         /**
          * Text widget.
          */
-        Text(GPhoto2Native.GP_WIDGET_TEXT, true, false, false, String.class),
+        Text(GPhoto2Native.GP_WIDGET_TEXT, true, false, true, String.class),
         /**
          * Slider widget.
          */
@@ -78,11 +78,11 @@ public final class CameraWidgets implements Closeable {
         /**
          * Radio button widget.
          */
-        Radio(GPhoto2Native.GP_WIDGET_RADIO, true, true, false, String.class),
+        Radio(GPhoto2Native.GP_WIDGET_RADIO, true, true, true, String.class),
         /**
          * Menu widget (same as {@link #Radio}).
          */
-        Menu(GPhoto2Native.GP_WIDGET_MENU, true, true, false, String.class),
+        Menu(GPhoto2Native.GP_WIDGET_MENU, true, true, true, String.class),
         /**
          * Button press widget.
          */
@@ -233,7 +233,7 @@ public final class CameraWidgets implements Closeable {
                 final PointerByReference pref = new PointerByReference();
                 CameraUtils.check(GPhoto2Native.INSTANCE.gp_widget_get_value(get(name), pref), "gp_widget_get_value");
                 final Pointer p = pref.getValue();
-                return p.getString(0);
+                return p == null ? null : p.getString(0);
             }
             case Range: {
                 final FloatByReference pref = new FloatByReference();
@@ -278,16 +278,20 @@ public final class CameraWidgets implements Closeable {
             case Text:
             case Radio:
             case Menu: {
-                final byte[] b;
-                try {
-                    b = ((String) value).getBytes("ASCII");
-                } catch (UnsupportedEncodingException ex) {
-                    throw new RuntimeException(ex);
+                if (value == null) {
+                    ptr = null;
+                } else {
+                    final byte[] b;
+                    try {
+                        b = ((String) value).getBytes("ASCII");
+                    } catch (UnsupportedEncodingException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    // patched as shown in https://code.google.com/p/gphoto2-java/issues/detail?id=5
+                    final ByteBuffer buf = ByteBuffer.allocateDirect(b.length + 1);
+                    buf.put(b);
+                    ptr = Native.getDirectBufferPointer(buf);
                 }
-                // patched as shown in https://code.google.com/p/gphoto2-java/issues/detail?id=5
-                final ByteBuffer buf = ByteBuffer.allocateDirect(b.length + 1);
-                buf.put(b);
-                ptr = Native.getDirectBufferPointer(buf);
             }
             break;
             case Range:
