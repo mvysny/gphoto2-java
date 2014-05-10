@@ -46,7 +46,7 @@
     <distributionManagement>
         <repository>
             <id>realtime</id>
-            <url>scp://rt.sk/home/moto/public_html/maven2</url>
+            <url>sftp://rt.sk/home/moto/public_html/maven2</url>
         </repository>
     </distributionManagement>
     <licenses>
@@ -67,6 +67,13 @@
         </developer>
     </developers>
     <build>
+	    <extensions>
+		<extension>
+		    <groupId>org.apache.maven.wagon</groupId>
+		    <artifactId>wagon-ssh</artifactId>
+		    <version>2.2</version>
+		</extension>
+	    </extensions>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
