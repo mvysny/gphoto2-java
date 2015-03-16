@@ -34,14 +34,13 @@
         <url>http://www.innovatrics.com</url>
     </organization>
     <scm>
-        <connection>scm:hg:https://gphoto2-java.googlecode.com/hg/</connection>
-        <developerConnection>scm:hg:https://gphoto2-java.googlecode.com/hg/</developerConnection>
-        <url>https://gphoto2-java.googlecode.com/hg/</url>
+        <connection>scm:git:ssh://git@github.com/mvysny/gphoto2-java.git</connection>
+        <url>https://github.com/mvysny/gphoto2-java</url>
       <tag>HEAD</tag>
   </scm>
     <issueManagement>
-        <system>GoogleCode</system>
-        <url>http://code.google.com/p/gphoto2-java/issues/list</url>
+        <system>GitHub</system>
+        <url>https://github.com/mvysny/gphoto2-java/issues</url>
     </issueManagement>
     <distributionManagement>
         <repository>
@@ -128,8 +127,6 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <username>${google-code.hg.username}</username>
-                    <password>${google-code.hg.password}</password>
                 </configuration>
             </plugin>
         </plugins>
