@@ -53,7 +53,7 @@ Then add the following to your dependencies:
 <dependency>
  <groupId>org.gphoto</groupId>
  <artifactId>gphoto2-java</artifactId>
- <version>1.1</version>
+ <version>1.4</version>
 </dependency>
 ```
 
