@@ -43,7 +43,7 @@ public interface GPhoto2Native extends Library {
      * error.
      *
      */
-    public static final int GP_ERROR_CORRUPTED_DATA = -102;
+    int GP_ERROR_CORRUPTED_DATA = -102;
     /**
      * File already exists
      *
@@ -51,7 +51,7 @@ public interface GPhoto2Native extends Library {
      * example when the user tries to create a file that already exists.
      *
      */
-    public static final int GP_ERROR_FILE_EXISTS = -103;
+    int GP_ERROR_FILE_EXISTS = -103;
     /**
      * Specified camera model was not found
      *
@@ -59,7 +59,7 @@ public interface GPhoto2Native extends Library {
      * user specified a model that does not seem to be supported by any driver.
      *
      */
-    public static final int GP_ERROR_MODEL_NOT_FOUND = -105;
+    int GP_ERROR_MODEL_NOT_FOUND = -105;
     /**
      * Specified directory was not found
      *
@@ -67,7 +67,7 @@ public interface GPhoto2Native extends Library {
      * the user specified a directory that is non-existent.
      *
      */
-    public static final int GP_ERROR_DIRECTORY_NOT_FOUND = -107;
+    int GP_ERROR_DIRECTORY_NOT_FOUND = -107;
     /**
      * Specified file was not found
      *
@@ -75,7 +75,7 @@ public interface GPhoto2Native extends Library {
      * user wants to access a file that is non-existent.
      *
      */
-    public static final int GP_ERROR_FILE_NOT_FOUND = -108;
+    int GP_ERROR_FILE_NOT_FOUND = -108;
     /**
      * Specified directory already exists
      *
@@ -83,14 +83,14 @@ public interface GPhoto2Native extends Library {
      * example when the user wants to create a directory that already exists.
      *
      */
-    public static final int GP_ERROR_DIRECTORY_EXISTS = -109;
+    int GP_ERROR_DIRECTORY_EXISTS = -109;
     /**
      * The camera is already busy
      *
      * Camera I/O or a command is in progress.
      *
      */
-    public static final int GP_ERROR_CAMERA_BUSY = -110;
+    int GP_ERROR_CAMERA_BUSY = -110;
     /**
      * Path is not absolute
      *
@@ -100,7 +100,7 @@ public interface GPhoto2Native extends Library {
      * like relative paths.
      *
      */
-    public static final int GP_ERROR_PATH_NOT_ABSOLUTE = -111;
+    int GP_ERROR_PATH_NOT_ABSOLUTE = -111;
     /**
      * Cancellation successful.
      *
@@ -108,7 +108,7 @@ public interface GPhoto2Native extends Library {
      * GP_CONTEXT_FEEDBACK_CANCEL was successful and the transfer has been
      * aborted.
      */
-    public static final int GP_ERROR_CANCEL = -112;
+    int GP_ERROR_CANCEL = -112;
     /**
      * Unspecified camera error
      *
@@ -117,111 +117,111 @@ public interface GPhoto2Native extends Library {
      * permission, anything else that stops the camera from performing the
      * operation.
      */
-    public static final int GP_ERROR_CAMERA_ERROR = -113;
+    int GP_ERROR_CAMERA_ERROR = -113;
     /**
      * Unspecified failure of the operating system
      *
      * There was some sort of OS error in communicating with the camera, e.g.
      * lack of permission for an operation.
      */
-    public static final int GP_ERROR_OS_FAILURE = -114;
+    int GP_ERROR_OS_FAILURE = -114;
     /**
      * \brief Everything is OK
      *
      * Note that this is also the value 0, and every error is negative (lower).
      */
-    public static final int GP_OK = 0;
+    int GP_OK = 0;
     /**
      * \brief Generic Error
      */
-    public static final int GP_ERROR = -1;
+    int GP_ERROR = -1;
     /**
      * \brief Bad parameters passed
      */
-    public static final int GP_ERROR_BAD_PARAMETERS = -2;
+    int GP_ERROR_BAD_PARAMETERS = -2;
     /**
      * \brief Out of memory
      */
-    public static final int GP_ERROR_NO_MEMORY = -3;
+    int GP_ERROR_NO_MEMORY = -3;
     /**
      * \brief Error in the camera driver
      */
-    public static final int GP_ERROR_LIBRARY = -4;
+    int GP_ERROR_LIBRARY = -4;
     /**
      * \brief Unknown libgphoto2 port passed
      */
-    public static final int GP_ERROR_UNKNOWN_PORT = -5;
+    int GP_ERROR_UNKNOWN_PORT = -5;
     /**
      * \brief Functionality not supported
      */
-    public static final int GP_ERROR_NOT_SUPPORTED = -6;
+    int GP_ERROR_NOT_SUPPORTED = -6;
     /**
      * \brief Generic I/O error
      */
-    public static final int GP_ERROR_IO = -7;
+    int GP_ERROR_IO = -7;
     /**
      * \brief Buffer overflow of internal structure
      */
-    public static final int GP_ERROR_FIXED_LIMIT_EXCEEDED = -8;
+    int GP_ERROR_FIXED_LIMIT_EXCEEDED = -8;
     /**
      * \brief Operation timed out
      */
-    public static final int GP_ERROR_TIMEOUT = -10;
+    int GP_ERROR_TIMEOUT = -10;
     /**
      * \brief Serial ports not supported
      */
-    public static final int GP_ERROR_IO_SUPPORTED_SERIAL = -20;
+    int GP_ERROR_IO_SUPPORTED_SERIAL = -20;
     /**
      * \brief USB ports not supported
      */
-    public static final int GP_ERROR_IO_SUPPORTED_USB = -21;
+    int GP_ERROR_IO_SUPPORTED_USB = -21;
     /**
      * \brief Error initialising I/O
      */
-    public static final int GP_ERROR_IO_INIT = -31;
+    int GP_ERROR_IO_INIT = -31;
     /**
      * \brief I/O during read
      */
-    public static final int GP_ERROR_IO_READ = -34;
+    int GP_ERROR_IO_READ = -34;
     /**
      * \brief I/O during write
      */
-    public static final int GP_ERROR_IO_WRITE = -35;
+    int GP_ERROR_IO_WRITE = -35;
     /**
      * \brief I/O during update of settings
      */
-    public static final int GP_ERROR_IO_UPDATE = -37;
+    int GP_ERROR_IO_UPDATE = -37;
     /**
      * \brief Specified serial speed not possible.
      */
-    public static final int GP_ERROR_IO_SERIAL_SPEED = -41;
+    int GP_ERROR_IO_SERIAL_SPEED = -41;
     /**
      * \brief Error during USB Clear HALT
      */
-    public static final int GP_ERROR_IO_USB_CLEAR_HALT = -51;
+    int GP_ERROR_IO_USB_CLEAR_HALT = -51;
     /**
      * \brief Error when trying to find USB device
      */
-    public static final int GP_ERROR_IO_USB_FIND = -52;
+    int GP_ERROR_IO_USB_FIND = -52;
     /**
      * \brief Error when trying to claim the USB device
      */
-    public static final int GP_ERROR_IO_USB_CLAIM = -53;
+    int GP_ERROR_IO_USB_CLAIM = -53;
     /**
      * \brief Error when trying to lock the device
      */
-    public static final int GP_ERROR_IO_LOCK = -60;
+    int GP_ERROR_IO_LOCK = -60;
     /**
      * \brief Unspecified error when talking to HAL
      */
-    public static final int GP_ERROR_HAL = -70;
-    public static final int GP_CAPTURE_IMAGE = 0;
-    public static final int GP_CAPTURE_MOVIE = 1;
-    public static final int GP_CAPTURE_SOUND = 2;
-    public static final int GP_FILE_TYPE_NORMAL = 1;
-    public static final int GP_VERSION_SHORT = 0;
-    public static final int GP_VERSION_VERBOSE = 1;
-    public static final GPhoto2Native INSTANCE = (GPhoto2Native) Native.loadLibrary("libgphoto2.so.2", GPhoto2Native.class);
+    int GP_ERROR_HAL = -70;
+    int GP_CAPTURE_IMAGE = 0;
+    int GP_CAPTURE_MOVIE = 1;
+    int GP_CAPTURE_SOUND = 2;
+    int GP_FILE_TYPE_NORMAL = 1;
+    int GP_VERSION_SHORT = 0;
+    int GP_VERSION_VERBOSE = 1;
+    GPhoto2Native INSTANCE = (GPhoto2Native) Native.loadLibrary("libgphoto2.so.2", GPhoto2Native.class);
 
     int gp_camera_new(PointerByReference pcamera);
 
@@ -302,7 +302,7 @@ public interface GPhoto2Native extends Library {
      * successful capture and is passed as reference to the gp_camera_capture()
      * function.
      */
-    public static class CameraFilePath extends Structure {
+    class CameraFilePath extends Structure {
         {
             setFieldOrder(new String[] { "name", "folder" });
         }
@@ -318,15 +318,15 @@ public interface GPhoto2Native extends Library {
         public static class ByReference extends CameraFilePath implements Structure.ByReference {
         };
     }
-    public static final int GP_WIDGET_WINDOW = 0;//  # Window widget This is the toplevel configuration widget. It should likely contain multiple GP_WIDGET_SECTION entries.
-    public static final int GP_WIDGET_SECTION = 1;// # Section widget (think Tab).
-    public static final int GP_WIDGET_TEXT = 2;//    # Text widget.
-    public static final int GP_WIDGET_RANGE = 3;//   # Slider widget.
-    public static final int GP_WIDGET_TOGGLE = 4;//  # Toggle widget (think check box).
-    public static final int GP_WIDGET_RADIO = 5;//   # Radio button widget.
-    public static final int GP_WIDGET_MENU = 6;//    # Menu widget (same as RADIO).
-    public static final int GP_WIDGET_BUTTON = 7;//  # Button press widget.
-    public static final int GP_WIDGET_DATE = 8;//    # Date entering widget.
+    int GP_WIDGET_WINDOW = 0;//  # Window widget This is the toplevel configuration widget. It should likely contain multiple GP_WIDGET_SECTION entries.
+    int GP_WIDGET_SECTION = 1;// # Section widget (think Tab).
+    int GP_WIDGET_TEXT = 2;//    # Text widget.
+    int GP_WIDGET_RANGE = 3;//   # Slider widget.
+    int GP_WIDGET_TOGGLE = 4;//  # Toggle widget (think check box).
+    int GP_WIDGET_RADIO = 5;//   # Radio button widget.
+    int GP_WIDGET_MENU = 6;//    # Menu widget (same as RADIO).
+    int GP_WIDGET_BUTTON = 7;//  # Button press widget.
+    int GP_WIDGET_DATE = 8;//    # Date entering widget.
 
     int gp_widget_new(int type, String label, PointerByReference widget);
 
