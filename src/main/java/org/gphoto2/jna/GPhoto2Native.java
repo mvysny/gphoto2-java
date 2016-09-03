@@ -221,7 +221,7 @@ public interface GPhoto2Native extends Library {
     int GP_FILE_TYPE_NORMAL = 1;
     int GP_VERSION_SHORT = 0;
     int GP_VERSION_VERBOSE = 1;
-    GPhoto2Native INSTANCE = (GPhoto2Native) Native.loadLibrary("libgphoto2.so.2", GPhoto2Native.class);
+    GPhoto2Native INSTANCE = (GPhoto2Native) Native.loadLibrary("gphoto2", GPhoto2Native.class);
 
     int gp_camera_new(PointerByReference pcamera);
 
