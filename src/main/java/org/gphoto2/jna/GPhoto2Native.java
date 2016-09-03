@@ -27,6 +27,7 @@ import com.sun.jna.ptr.FloatByReference;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -320,7 +321,7 @@ public interface GPhoto2Native extends Library {
         public List getFieldOrder() {
             // fixes compatibility with JNA 3.5.0 and higher.
             // see https://github.com/mvysny/gphoto2-java/issues/10 for details.
-            return java.util.Arrays.asList("name", "folder");
+            return Arrays.asList("name", "folder");
         }
 
         public static class ByReference extends CameraFilePath implements Structure.ByReference {
