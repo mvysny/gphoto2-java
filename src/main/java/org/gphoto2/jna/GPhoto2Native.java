@@ -307,7 +307,8 @@ public interface GPhoto2Native extends Library {
      */
     class CameraFilePath extends Structure {
         {
-            setFieldOrder(new String[] { "name", "folder" });
+            // must not call with JNA 3.5.0 or higher.
+//            setFieldOrder(new String[] { "name", "folder" });
         }
         /**
          * Name of the captured file.
