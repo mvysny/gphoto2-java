@@ -19,7 +19,7 @@ CameraUtils.closeQuietly(cf2);
 CameraUtils.closeQuietly(c);
 ```
 
-Note that the https://github.com/twall/jna library is required to be present on the classpath (tested with version 3.0.9).
+Note that the https://github.com/twall/jna library is required to be present on the classpath (1.4 and prior versions tested with JNA 3.0.9, 1.5 tested with JNA 4.2.2).
 
 ## Downloads
 
@@ -53,7 +53,7 @@ Then add the following to your dependencies:
 <dependency>
  <groupId>org.gphoto</groupId>
  <artifactId>gphoto2-java</artifactId>
- <version>1.4</version>
+ <version>1.5</version>
 </dependency>
 ```
 
